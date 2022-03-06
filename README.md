@@ -14,3 +14,12 @@ The best existing option I have found so far is QLC+. It is very confusing for m
 MLC is built entirely around **scenes**. A **scene** is the state of all of the faders at a given time. For example, a scene could include channel 1 at level 127, channel 2 at level 200, etc. DMX allows up to 512 channels, each with a level in the range 0-255, and MLC will show only the channels that you set up as belonging to actual devices.
 
 MLC allows you to define scenes, recall different scenes, and recall scenes on demand over MIDI using hardware or software such as Faithlife Proclaim.
+
+## Technology
+MLC is built on the following technologies:
+* Electron: packages a JavaScript applciation as a native desktop app
+* React: frontend framework for the user interface
+* node-midi: Node.js library for interacting with MIDI devices / applications
+* serial-port: Node.js library for interacting with serial ports
+  - [Enttec DMX Pro Mk2](https://www.enttec.com/product/controls/dmx-usb-interfaces/dmx-usb-pro-interface/): USB interface to MIDI
+  - [DmxPy](https://github.com/itsb/DmxPy) - example in Python that shows how to control the DMX adapter using a serial port
