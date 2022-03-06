@@ -18,7 +18,7 @@ export const MLCTabs: React.FC<MLCTabsProps> = ({ tabs }) => {
     <div className='mlc-tabs'>
       <div className='tabs'>
         {tabs.map((tab) => (
-          <div className={'tab' + (selectedTab === tab.id ? ' selected' : '')} onClick={() => setSelectedTab(tab.id)}>
+          <div key={tab.id} className={'tab' + (selectedTab === tab.id ? ' selected' : '')} onClick={() => setSelectedTab(tab.id)}>
             <FontAwesomeIcon icon={tab.icon} /> &nbsp;{tab.title}
           </div>
         ))}
