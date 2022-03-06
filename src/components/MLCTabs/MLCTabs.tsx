@@ -23,7 +23,13 @@ export const MLCTabs: React.FC<MLCTabsProps> = ({ tabs }) => {
           </div>
         ))}
       </div>
-      <div className='content'>{tabs.filter((t) => t.id === selectedTab)[0].render()}</div>
+      <div className='content'>
+        {tabs.map((tab) => (
+          <div key={tab.id} style={tab.id === selectedTab ? {} : { display: 'none' }}>
+            {tab.render()}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
