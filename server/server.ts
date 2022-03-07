@@ -19,13 +19,13 @@ export function setupServer() {
       const message = JSON.parse(msg.toString());
       switch (message.type) {
         case 'getSettings':
-          return ws.send(JSON.stringify({ type: 'getSettings', settings: getSettings() }));
+          return ws.send(JSON.stringify({ type: 'settings', settings: getSettings() }));
         case 'saveSettings':
           return saveSettings(message.settings);
         case 'saveSettingsPartial':
           return saveSettingsPartial(message.settings);
         case 'getMidiOptions':
-          return ws.send(JSON.stringify({ type: 'midiOptions', settings: getMidiOptions() }));
+          return ws.send(JSON.stringify({ type: 'midiOptions', options: getMidiOptions() }));
         case 'setMidiPort':
           return setMidiPort(message.port);
       }

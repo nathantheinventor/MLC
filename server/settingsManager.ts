@@ -34,5 +34,6 @@ export function saveSettings(settings: Settings) {
 
 export function saveSettingsPartial(partial: Partial<Settings>) {
   const settings = { ...getSettings(), ...partial };
+  console.log('saving settings', settings, partial);
   saveSettings(settings);
 }
