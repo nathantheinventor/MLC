@@ -2,16 +2,17 @@ import React from 'react';
 import './App.scss';
 import { MLCTabs } from './components/MLCTabs/MLCTabs';
 import { faCog, faPlay, faList } from '@fortawesome/free-solid-svg-icons';
-import { MlcSettings } from './components/MlcSettings/MlcSettings';
+import { MLCSettings } from './components/MLCSettings/MLCSettings';
+import { MLCScenes } from './components/MLCScenes/MLCScenes';
 
 function App() {
   return (
     <div>
       <MLCTabs
         tabs={[
-          { id: 'live', title: 'Live', icon: faPlay, render: () => <MlcSettings /> },
-          { id: 'scene-setup', title: 'Scene Setup', icon: faList, render: () => <MlcSettings /> },
-          { id: 'settings', title: 'Settings', icon: faCog, render: () => <MlcSettings /> }
+          { id: 'live', title: 'Live', icon: faPlay, render: () => <MLCSettings /> },
+          { id: 'scene-setup', title: 'Scene Setup', icon: faList, render: () => <MLCScenes /> },
+          { id: 'settings', title: 'Settings', icon: faCog, render: () => <MLCSettings /> }
         ]}
       />
     </div>

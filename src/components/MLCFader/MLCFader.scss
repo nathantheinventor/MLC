@@ -1,0 +1,43 @@
+div.mlc-fader {
+  text-align: center;
+  width: 50px;
+  user-select: none;
+  display: inline-block;
+
+  div.fader-name {
+    text-overflow: ellipsis;
+    font-weight: bold;
+    overflow: hidden;
+    font-size: 11px;
+    height: 30px;
+    padding: 3px;
+    vertical-align: middle;
+  }
+
+  div.fader {
+    position: relative;
+    height: 138px;
+    width: 100%;
+
+    div.slider-bar {
+      position: absolute;
+      height: 128px;
+      width: 2px;
+      left: 24px;
+      top: 5px;
+      background: black;
+    }
+
+    div.slider-tab {
+      position: absolute;
+      left: 20px;
+      width: 10px;
+      height: 10px;
+      background: gray;
+      border-radius: 100px;
+    }
+  }
+
+  div.fader-value {
+  }
+}

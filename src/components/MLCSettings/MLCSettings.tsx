@@ -1,15 +1,15 @@
-import './MlcSettings.scss';
+import './MLCSettings.scss';
 import React, { useEffect, useState } from 'react';
 import { listenWS, sendMessage } from '../../services/connection';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface Fixture {
+export interface Fixture {
   channel: number;
   name: string;
 }
 
-export const MlcSettings: React.FC = () => {
+export const MLCSettings: React.FC = () => {
   const [midiOptions, setMidiOptions] = useState<string[]>([]);
   const [midiPort, setMidiPort] = useState('');
   const [serialOptions, setSerialOptions] = useState<string[]>([]);
