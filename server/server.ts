@@ -28,6 +28,10 @@ export function setupServer() {
           return ws.send(JSON.stringify({ type: 'midiOptions', options: getMidiOptions() }));
         case 'setMidiPort':
           return setMidiPort(message.port);
+        case 'getSerialOptions':
+          return; // TODO
+        case 'sendLevels':
+          return; // TODO
       }
     });
   });

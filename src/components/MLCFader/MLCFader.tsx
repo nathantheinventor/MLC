@@ -12,7 +12,6 @@ export const MLCFader: React.FC<MLCFaderProps> = ({ name, value, onChange }) => 
   const slider = useRef<HTMLDivElement>(null);
 
   function onMouseMove(event: MouseEvent<HTMLDivElement>) {
-    console.log(event);
     if (!dragging) return;
     const rect = slider.current?.getBoundingClientRect();
     const y = Math.max(0, event.clientY - (rect?.y || 0));

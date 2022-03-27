@@ -1,4 +1,8 @@
 div.mlc-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
   div.tabs {
     box-shadow: 0 0 4px rgb(127 127 127 / 50%);
 
@@ -18,5 +22,10 @@ div.mlc-tabs {
 
   div.content {
     padding: 10px;
+    flex-grow: 1;
+
+    > div {
+      height: 100%;
+    }
   }
 }

@@ -1,3 +1,48 @@
 div#mlc-scenes {
+  display: flex;
+  height: 100%;
+  margin: -10px;
 
+  div#scene-list {
+    width: 200px;
+    border-right: 1px solid;
+    height: 100%;
+    overflow: auto;
+
+    .recall-scene {
+      border-bottom: 1px solid;
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    .add-scene {
+      padding: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+
+  div#edit-scene {
+    flex-grow: 1;
+
+    div#scene-basics {
+      padding: 12px;
+      display: flex;
+      border-bottom: 1px solid;
+
+      > div {
+        flex-grow: 1;
+
+        label {
+          display: block;
+          font-size: 0.8em;
+          font-weight: bold;
+        }
+
+        button {
+          text-align: right;
+        }
+      }
+    }
+  }
 }

@@ -3,11 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { listenWS, sendMessage } from '../../services/connection';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-export interface Fixture {
-  channel: number;
-  name: string;
-}
+import { Fixture } from '../../services/show-scene';
 
 export const MLCSettings: React.FC = () => {
   const [midiOptions, setMidiOptions] = useState<string[]>([]);

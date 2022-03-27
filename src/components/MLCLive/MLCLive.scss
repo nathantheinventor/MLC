@@ -1,0 +1,29 @@
+div#mlc-live {
+  display: flex;
+  height: 100%;
+  margin: -10px;
+  flex-direction: column;
+
+  div#levels {
+    padding: 12px;
+    overflow: auto;
+    max-width: 100%;
+    border-bottom: 1px solid;
+  }
+
+  div#scenes {
+    display: flex;
+    overflow: auto;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    padding: 12px 0 12px 12px;
+
+    div.scene {
+      cursor: pointer;
+      padding: 12px;
+      box-shadow: 0px 0px 4px rgb(0 0 0 / 50%);
+      height: 16px;
+      margin-right: 12px;
+    }
+  }
+}
