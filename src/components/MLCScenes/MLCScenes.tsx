@@ -5,6 +5,7 @@ import { listenWS, sendMessage } from '../../services/connection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Fixture, showScene } from '../../services/show-scene';
+import { updateScenes, useSettings } from '../../services/settings';
 
 interface Scene {
   id: number;
@@ -14,43 +15,33 @@ interface Scene {
 }
 
 export const MLCScenes: React.FC = () => {
-  const [fixtures, setFixtures] = useState<Fixture[]>([]);
-  const [scenes, setScenes] = useState<Scene[]>([]);
-  const [selectedScene, setSelectedScene] = useState<Scene>();
+    const [selectedScene, setSelectedScene] = useState<Scene>();
   const [preview, setPreview] = useState(false);
+  const settings=  useSettings()
 
   useEffect(() => {
-    listenWS('settings', (msg) => {
-      setFixtures(msg.settings.fixtures);
-      setScenes(msg.settings.scenes);
-    });
-    sendMessage('getSettings');
-  }, []);
-
-  useEffect(() => {
-    if (preview && selectedScene) showScene(selectedScene.levels, fixtures);
+    if (preview && selectedScene) showScene(selectedScene.levels, settings.fixtures);
   }, [preview, selectedScene]);
 
   function addScene() {
     setSelectedScene({
-      id: scenes.length + 1,
+      id: settings.scenes.length + 1,
       name: 'Untitled Scene',
-      levels: fixtures.map(() => 0),
+      levels: settings.fixtures.map(() => 0),
       recallTime: 5000
     });
   }
 
   function save() {
-    if (selectedScene!.id > scenes.length) scenes.push(selectedScene!);
-    else scenes[selectedScene!.id - 1] = selectedScene!;
-    setScenes(scenes.map((x) => x));
-    sendMessage('saveSettingsPartial', { settings: { scenes } });
+    if (selectedScene!.id > settings.scenes.length) settings.scenes.push(selectedScene!);
+    else settings.scenes[selectedScene!.id - 1] = selectedScene!;
+    updateScenes(settings.scenes)
   }
 
   return (
     <div id='mlc-scenes'>
       <div id='scene-list'>
-        {scenes.map((scene) => (
+        {settings.scenes.map((scene) => (
           <div key={scene.id} className='recall-scene' onClick={() => setSelectedScene(JSON.parse(JSON.stringify(scene)))}>
             {scene.name}
           </div>
@@ -87,13 +78,13 @@ export const MLCScenes: React.FC = () => {
             </div>
           </div>
           <div id='faders'>
-            {fixtures.map((fixture, i) => (
+            {settings.fixtures.map((fixture, i) => (
               <MLCFader
                 key={i}
                 name={fixture.name}
                 value={selectedScene.levels[i]}
                 onChange={(val) => {
-                  while (selectedScene.levels.length < fixtures.length) {
+                  while (selectedScene.levels.length < settings.fixtures.length) {
                     selectedScene.levels.push(0);
                   }
                   selectedScene.levels[i] = val;

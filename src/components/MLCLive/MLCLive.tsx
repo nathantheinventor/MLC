@@ -5,6 +5,7 @@ import { listenWS, sendMessage } from '../../services/connection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Fixture, recallScene, showScene, updateLevel, useCurrentLevels } from '../../services/show-scene';
+import { useSettings } from '../../services/settings';
 
 interface Scene {
   id: number;
@@ -14,33 +15,24 @@ interface Scene {
 }
 
 export const MLCLive: React.FC = () => {
-  const [fixtures, setFixtures] = useState<Fixture[]>([]);
-  const [scenes, setScenes] = useState<Scene[]>([]);
   const levels = useCurrentLevels();
+  const settings = useSettings()
 
   useEffect(() => {
-    listenWS('settings', (msg) => {
-      const { fixtures, scenes } = msg.settings;
-      setScenes(scenes);
-      showScene(
-        fixtures.map(() => 0),
-        fixtures
-      );
-      setFixtures(fixtures);
-    });
-    sendMessage('getSettings');
+    if (settings.fixtures.length)
+      showScene(        settings.fixtures.map(() => 0),        settings.fixtures      );
   }, []);
 
   return (
     <div id='mlc-live'>
       <div id='levels'>
-        {fixtures.map((fixture, i) => (
-          <MLCFader key={i} name={fixture.name} value={levels[i]} onChange={updateLevel(i, fixtures)} />
+        {settings.fixtures.map((fixture, i) => (
+          <MLCFader key={i} name={fixture.name} value={levels[i]} onChange={updateLevel(i, settings.fixtures)} />
         ))}
       </div>
       <div id='scenes'>
-        {scenes.map((scene) => (
-          <div key={scene.id} className='scene' onClick={() => recallScene(scene.levels, fixtures, scene.recallTime)}>
+        {settings.scenes.map((scene) => (
+          <div key={scene.id} className='scene' onClick={() => recallScene(scene.levels, settings.fixtures, scene.recallTime)}>
             <FontAwesomeIcon icon={faPlay} /> &nbsp;{scene.name}
           </div>
         ))}
