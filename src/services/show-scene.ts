@@ -1,5 +1,5 @@
 import { sendMessage } from './connection';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface Fixture {
   channel: number;
@@ -14,8 +14,10 @@ let currentLevels: number[] = [];
 const levelHandles: ((levels: number[]) => void)[] = [];
 
 export const useCurrentLevels = () => {
-  const [levels, setLevels] = useState<number[]>(currentLevels);
-  levelHandles.push(setLevels);
+  const [levels, setLevels] = useState<number[]>(currentLevels.map((x) => x));
+  useEffect(() => {
+    levelHandles.push(setLevels);
+  }, []);
   return levels;
 };
 
@@ -26,9 +28,6 @@ export function updateLevel(index: number, fixtures: Fixture[]) {
       recallTimer = null;
     }
     currentLevels[index] = level;
-    for (const setLevels of levelHandles) {
-      setLevels(currentLevels);
-    }
     showScene(currentLevels, fixtures);
   };
 }
@@ -61,9 +60,9 @@ export function recallScene(targetLevels: number[], fixtures: Fixture[], duratio
 
 export function showScene(rawLevels: number[], fixtures: Fixture[]) {
   const levels: number[] = [];
-  currentLevels = rawLevels;
+  currentLevels = rawLevels.map((x) => x);
   for (const setLevels of levelHandles) {
-    setLevels(rawLevels);
+    setLevels(currentLevels);
   }
   for (let i = 0; i < 512; i++) {
     levels.push(0);

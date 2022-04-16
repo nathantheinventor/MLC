@@ -41,8 +41,7 @@ export const MLCLive: React.FC = () => {
       <div id='scenes'>
         {scenes.map((scene) => (
           <div key={scene.id} className='scene' onClick={() => recallScene(scene.levels, fixtures, scene.recallTime)}>
-            <FontAwesomeIcon icon={faPlay} />
-            {scene.name}
+            <FontAwesomeIcon icon={faPlay} /> &nbsp;{scene.name}
           </div>
         ))}
       </div>

@@ -18,7 +18,6 @@ export const MLCScenes: React.FC = () => {
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [selectedScene, setSelectedScene] = useState<Scene>();
   const [preview, setPreview] = useState(false);
-  const [updater, setUpdater] = useState(0);
 
   useEffect(() => {
     listenWS('settings', (msg) => {
@@ -30,7 +29,7 @@ export const MLCScenes: React.FC = () => {
 
   useEffect(() => {
     if (preview && selectedScene) showScene(selectedScene.levels, fixtures);
-  }, [preview, selectedScene])
+  }, [preview, selectedScene]);
 
   function addScene() {
     setSelectedScene({
@@ -44,8 +43,7 @@ export const MLCScenes: React.FC = () => {
   function save() {
     if (selectedScene!.id > scenes.length) scenes.push(selectedScene!);
     else scenes[selectedScene!.id - 1] = selectedScene!;
-    setScenes(scenes);
-    setUpdater(updater + 1);
+    setScenes(scenes.map((x) => x));
     sendMessage('saveSettingsPartial', { settings: { scenes } });
   }
 
@@ -53,7 +51,7 @@ export const MLCScenes: React.FC = () => {
     <div id='mlc-scenes'>
       <div id='scene-list'>
         {scenes.map((scene) => (
-          <div key={scene.id} className='recall-scene' onClick={() => setSelectedScene(scene)}>
+          <div key={scene.id} className='recall-scene' onClick={() => setSelectedScene(JSON.parse(JSON.stringify(scene)))}>
             {scene.name}
           </div>
         ))}
@@ -73,7 +71,7 @@ export const MLCScenes: React.FC = () => {
               <input value={selectedScene.name} onChange={(event) => setSelectedScene({ ...selectedScene, name: event.target.value })} />
             </div>
             <div>
-              <label>Recall Time</label>
+              <label>Recall Time [ms]</label>
               <input
                 value={selectedScene.recallTime}
                 type='number'
