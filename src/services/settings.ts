@@ -22,15 +22,20 @@ interface Settings {
 
 let currentSettings: Settings = { scenes: [], fixtures: [], serialPort: '', midiPort: '' };
 let loaded = false;
+let loading = false;
 const settingsHandles: ((settings: Settings) => void)[] = [];
 
 export const useSettings = () => {
   const [settings, setSettings] = useState<Settings>(currentSettings);
   useEffect(() => {
     settingsHandles.push(setSettings);
-    if (!loaded) {
-      loaded = true;
-      listenWS('settings', (msg) => settingsHandles.forEach((handle) => handle(msg.settings)));
+    if (!loading) {
+      loading = true;
+      listenWS('settings', (msg) => {
+        settingsHandles.forEach((handle) => handle(msg.settings));
+        loaded = true;
+        currentSettings = JSON.parse(JSON.stringify(msg.settings));
+      });
       sendMessage('getSettings');
     }
   }, []);
@@ -38,7 +43,7 @@ export const useSettings = () => {
 };
 
 function updateSettings(settings: Settings) {
-  if (!loaded) return
+  if (!loaded) return;
   currentSettings = JSON.parse(JSON.stringify(settings));
   settingsHandles.forEach((handle) => handle(currentSettings));
   sendMessage('saveSettingsPartial', { settings });
@@ -46,5 +51,11 @@ function updateSettings(settings: Settings) {
 
 export const updateScenes = (scenes: Scene[]) => updateSettings({ ...currentSettings, scenes });
 export const updateFixtures = (fixtures: Fixture[]) => updateSettings({ ...currentSettings, fixtures });
-export const updateSerialPort = (serialPort: string) => updateSettings({ ...currentSettings, serialPort });
-export const updateMidiPort = (midiPort: string) => updateSettings({ ...currentSettings, midiPort });
+export const updateSerialPort = (serialPort: string) => {
+  updateSettings({ ...currentSettings, serialPort });
+  sendMessage('setSerialPort', { port: serialPort });
+};
+export const updateMidiPort = (midiPort: string) => {
+  updateSettings({ ...currentSettings, midiPort });
+  sendMessage('setMidiPort', { port: midiPort });
+};

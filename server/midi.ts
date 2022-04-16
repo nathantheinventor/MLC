@@ -6,7 +6,7 @@ import { broadcast } from './server';
 
 const input = new midi.Input();
 input.on('message', (_: number, message: number[]) => {
-  broadcast('setScene', { scene: message[0] });
+  broadcast('recallScene', { id: message[0] });
 });
 export function getMidiOptions(): string[] {
   const options: string[] = [];
@@ -34,7 +34,6 @@ export function setMidiPort(port: string) {
       }
     }
   }
-  saveSettingsPartial({ midiPort: port });
 }
 
 const settings = getSettings();

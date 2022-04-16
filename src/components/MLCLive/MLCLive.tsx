@@ -16,11 +16,21 @@ interface Scene {
 
 export const MLCLive: React.FC = () => {
   const levels = useCurrentLevels();
-  const settings = useSettings()
+  const settings = useSettings();
 
   useEffect(() => {
     if (settings.fixtures.length)
-      showScene(        settings.fixtures.map(() => 0),        settings.fixtures      );
+      showScene(
+        settings.fixtures.map(() => 0),
+        settings.fixtures
+      );
+  }, [settings]);
+
+  useEffect(() => {
+    listenWS('recallScene', (msg) => {
+      const scenes = settings.scenes.filter((s) => s.id === msg.id);
+      if (scenes.length) recallScene(scenes[0].levels, settings.fixtures, scenes[0].recallTime);
+    });
   }, []);
 
   return (

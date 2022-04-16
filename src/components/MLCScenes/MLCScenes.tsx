@@ -15,9 +15,9 @@ interface Scene {
 }
 
 export const MLCScenes: React.FC = () => {
-    const [selectedScene, setSelectedScene] = useState<Scene>();
+  const [selectedScene, setSelectedScene] = useState<Scene>();
   const [preview, setPreview] = useState(false);
-  const settings=  useSettings()
+  const settings = useSettings();
 
   useEffect(() => {
     if (preview && selectedScene) showScene(selectedScene.levels, settings.fixtures);
@@ -35,7 +35,7 @@ export const MLCScenes: React.FC = () => {
   function save() {
     if (selectedScene!.id > settings.scenes.length) settings.scenes.push(selectedScene!);
     else settings.scenes[selectedScene!.id - 1] = selectedScene!;
-    updateScenes(settings.scenes)
+    updateScenes(settings.scenes);
   }
 
   return (

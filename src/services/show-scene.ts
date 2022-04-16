@@ -64,7 +64,7 @@ export function showScene(rawLevels: number[], fixtures: Fixture[]) {
   for (const setLevels of levelHandles) {
     setLevels(currentLevels);
   }
-  for (let i = 0; i < 512; i++) {
+  for (let i = 0; i < 513; i++) {
     levels.push(0);
   }
   for (let i = 0; i < fixtures.length; i++) {

@@ -1,3 +1,4 @@
 import { setupServer } from './server';
 
-setupServer()
+console.log('Loading');
+setupServer();

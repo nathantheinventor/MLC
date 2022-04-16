@@ -29,6 +29,7 @@ export function getSettings(): Settings {
 }
 
 export function saveSettings(settings: Settings) {
+  console.log("Hard saving", settings)
   fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings));
 }
 

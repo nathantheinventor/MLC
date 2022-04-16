@@ -1,6 +1,7 @@
 import * as WebSocket from 'ws';
 import { getSettings, saveSettings, saveSettingsPartial } from './settingsManager';
 import { getMidiOptions, setMidiPort } from './midi';
+import { getSerialOptions, setLevels, setSerialPort } from './serial';
 
 const webSockets: WebSocket[] = [];
 export function broadcast(type: string, message?: any) {
@@ -15,7 +16,7 @@ export function setupServer() {
   const wss = new WebSocket.Server({ port: 8234 });
   wss.on('connection', (ws: WebSocket) => {
     webSockets.push(ws);
-    ws.on('message', (msg) => {
+    ws.on('message', async (msg) => {
       const message = JSON.parse(msg.toString());
       switch (message.type) {
         case 'getSettings':
@@ -29,9 +30,11 @@ export function setupServer() {
         case 'setMidiPort':
           return setMidiPort(message.port);
         case 'getSerialOptions':
-          return; // TODO
+          return ws.send(JSON.stringify({ type: 'serialOptions', options: await getSerialOptions() }));
+        case 'setSerialPort':
+          return setSerialPort(message.port);
         case 'sendLevels':
-          return; // TODO
+          return setLevels(message.levels);
       }
     });
   });
