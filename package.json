@@ -2,14 +2,16 @@
   "name": "mlc",
   "version": "0.1.0",
   "description": "Lighting Control Software to connect MIDI to DMX",
-  "main": "main.js",
+  "main": "electron-src/main.js",
   "scripts": {
     "start-react": "PORT=3006 react-scripts start",
     "start-electron-no-build": "electron .",
     "start-electron": "npm run build && electron .",
     "start-server": "tsc && node dist/server/index.js",
     "start": "concurrently --kill-others \"npm run start-react\" \"npm run start-electron\"",
-    "build": "tsc && react-scripts build"
+    "build": "tsc && react-scripts build",
+    "make": "electron-forge make",
+    "deploy": "npm run build && electron-forge make"
   },
   "repository": "https://github.com/nathantheinventor/MLC",
   "author": "Nathan Collins <nathantheinventor@gmail.com>",
@@ -26,6 +28,7 @@
     "@types/jest": "^27.4.1",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
+    "electron-forge": "^5.2.4",
     "midi": "^2.0.0",
     "prettier": "^2.6.1",
     "react": "^17.0.2",
@@ -41,7 +44,35 @@
     "@types/node": "^17.0.21",
     "concurrently": "^7.0.0",
     "electron": "^17.1.0",
+    "electron-prebuilt-compile": "8.2.0",
     "electron-rebuild": "^3.2.7"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "MLC"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
