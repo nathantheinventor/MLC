@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './MLCLive.scss';
 import { MLCFader } from '../MLCFader/MLCFader';
 import { listenWS, sendMessage } from '../../services/connection';
@@ -17,6 +17,8 @@ interface Scene {
 export const MLCLive: React.FC = () => {
   const levels = useCurrentLevels();
   const settings = useSettings();
+  const currentSettings = useRef(settings);
+  currentSettings.current = settings;
 
   useEffect(() => {
     if (settings.fixtures.length)
@@ -28,6 +30,7 @@ export const MLCLive: React.FC = () => {
 
   useEffect(() => {
     listenWS('recallScene', (msg) => {
+      const settings = currentSettings.current;
       const scenes = settings.scenes.filter((s) => s.id === msg.id);
       if (scenes.length) recallScene(scenes[0].levels, settings.fixtures, scenes[0].recallTime);
     });
