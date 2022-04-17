@@ -6,7 +6,8 @@ import { broadcast } from './server';
 
 const input = new midi.Input();
 input.on('message', (_: number, message: number[]) => {
-  broadcast('recallScene', { id: message[0] });
+  console.log(message);
+  broadcast('recallScene', { id: message[1] });
 });
 export function getMidiOptions(): string[] {
   const options: string[] = [];

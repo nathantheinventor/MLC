@@ -23,7 +23,7 @@ export function setLevels(levels: number[]) {
   for (let i = 0; i < Math.min(levels.length, 513); i++) {
     levels2[i + 4] = Math.min(255, Math.max(0, Math.floor(levels[i])));
   }
-  if (port) port.write(levels2.buffer);
+  if (port) port.write(levels2);
 }
 
 const settings = getSettings();

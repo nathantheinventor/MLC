@@ -7,7 +7,7 @@ const webSockets: WebSocket[] = [];
 export function broadcast(type: string, message?: any) {
   for (const ws of webSockets) {
     if (ws.readyState === WebSocket.OPEN) {
-      ws.send({ type, ...message });
+      ws.send(JSON.stringify({ type, ...message }));
     }
   }
 }

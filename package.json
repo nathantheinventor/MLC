@@ -9,7 +9,7 @@
     "start-electron": "npm run build && electron .",
     "start-server": "tsc && node dist/server/index.js",
     "start": "concurrently --kill-others \"npm run start-react\" \"npm run start-electron\"",
-    "build": "export PUBLIC_URL=$(pwd)/build && tsc && react-scripts build"
+    "build": "tsc && react-scripts build"
   },
   "repository": "https://github.com/nathantheinventor/MLC",
   "author": "Nathan Collins <nathantheinventor@gmail.com>",
